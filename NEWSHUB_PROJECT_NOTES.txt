@@ -1,0 +1,217 @@
+============================================================
+         NEWSHUB PROJECT - COMPLETE NOTES
+         Saved on: 2025
+         Owner: JASWANTH1726
+============================================================
+
+------------------------------------------------------------
+1. PROJECT LOCATION (Your PC)
+------------------------------------------------------------
+Full Path:
+C:\Users\jaswa\Downloads\ML project\myproject
+
+Start File (Double Click):
+C:\Users\jaswa\Downloads\ML project\START_NEWSHUB.bat
+
+------------------------------------------------------------
+2. GITHUB REPOSITORY
+------------------------------------------------------------
+URL        : https://github.com/JASWANTH1726/newshub-django
+Username   : JASWANTH1726
+Email      : jaswanthjai1726@gmail.com
+
+To clone on any laptop:
+  git clone https://github.com/JASWANTH1726/newshub-django.git
+
+------------------------------------------------------------
+3. API KEY
+------------------------------------------------------------
+NewsAPI Key : fdac413c96534294891d3ad62c9d0062
+Get more keys: https://newsapi.org (free account)
+Set in: myproject\myproject\settings.py
+  NEWS_API_KEY = 'fdac413c96534294891d3ad62c9d0062'
+
+------------------------------------------------------------
+4. ADMIN LOGIN
+------------------------------------------------------------
+URL      : http://127.0.0.1:8000/admin
+Username : admin
+Password : admin123
+
+------------------------------------------------------------
+5. APP URLS
+------------------------------------------------------------
+Login     : http://127.0.0.1:8000/
+Register  : http://127.0.0.1:8000/register/
+Dashboard : http://127.0.0.1:8000/dashboard/
+Admin     : http://127.0.0.1:8000/admin/
+
+------------------------------------------------------------
+6. HOW TO START THE APP
+------------------------------------------------------------
+Option A (Easiest):
+  Double-click: START_NEWSHUB.bat
+
+Option B (Command Prompt):
+  cd "c:\Users\jaswa\Downloads\ML project\myproject"
+  python manage.py runserver
+  Open browser: http://127.0.0.1:8000
+
+------------------------------------------------------------
+7. HOW TO SETUP ON A NEW LAPTOP
+------------------------------------------------------------
+Step 1: Install Python from https://python.org
+Step 2: Open Command Prompt and run:
+  git clone https://github.com/JASWANTH1726/newshub-django.git
+  cd newshub-django\myproject
+  pip install django requests
+  python manage.py migrate
+  python manage.py runserver
+Step 3: Open http://127.0.0.1:8000
+
+NOTE: Add API key in myproject\myproject\settings.py:
+  NEWS_API_KEY = 'fdac413c96534294891d3ad62c9d0062'
+
+------------------------------------------------------------
+8. HOW TO PUSH NEW CHANGES TO GITHUB
+------------------------------------------------------------
+  cd "c:\Users\jaswa\Downloads\ML project"
+  git add .
+  git commit -m "describe your change here"
+  git push
+
+------------------------------------------------------------
+9. TECH STACK USED
+------------------------------------------------------------
+Language   : Python 3.13
+Framework  : Django 6.0
+Database   : SQLite3 (db.sqlite3)
+Frontend   : HTML5, CSS3
+API        : NewsAPI.org (live news)
+Feed       : RSS/XML (direct newspaper feeds)
+Hosting    : GitHub (code), Local (running)
+
+------------------------------------------------------------
+10. PYTHON MODULES USED
+------------------------------------------------------------
+django              - Web framework
+requests            - HTTP calls to NewsAPI & RSS
+xml.etree.ElementTree - Parse RSS/XML newspaper feeds
+django.contrib.auth - User login/register/logout
+
+------------------------------------------------------------
+11. PROJECT FILES
+------------------------------------------------------------
+news/models.py       - Database: UserPreference model
+news/views.py        - Page logic: login, register, dashboard
+news/forms.py        - Forms: Register, NewsFilter
+news/news_service.py - News engine: RSS + NewsAPI fetching
+news/urls.py         - URL routes
+news/admin.py        - Admin panel setup
+news/templates/
+  base.html          - Shared navbar & layout
+  login.html         - Login page
+  register.html      - Register page
+  dashboard.html     - Main news dashboard
+
+------------------------------------------------------------
+12. NEWSPAPERS COVERED (60+)
+------------------------------------------------------------
+English National : TOI, The Hindu, Indian Express, HT,
+                   Deccan Herald, New Indian Express,
+                   Deccan Chronicle, Business Standard,
+                   Economic Times, Mint, Hans India,
+                   Tribune, Statesman
+
+English Intl     : BBC, Reuters, Guardian, NYT,
+                   Washington Post, Al Jazeera,
+                   Bloomberg, CNN
+
+Telugu           : Eenadu, Sakshi, Andhra Jyothy,
+                   Vaartha, NT News, Great Andhra,
+                   Telangana Today, Andhra Headlines
+
+Hindi            : Dainik Jagran, Dainik Bhaskar,
+                   Amar Ujala, Hindustan, Rajasthan Patrika,
+                   Navbharat Times, Jansatta
+
+Tamil            : Dina Thanthi, Dinamalar, Dinamani,
+                   Maalai Malar
+
+Kannada          : Vijaya Karnataka, Prajavani,
+                   Vijayavani, Udayavani
+
+Malayalam        : Malayala Manorama, Mathrubhumi,
+                   Deshabhimani
+
+Marathi          : Lokmat, Maharashtra Times,
+                   Pudhari, Sakal
+
+Bengali          : Anandabazar Patrika, Bartaman,
+                   Sangbad Pratidin, Telegraph India
+
+Gujarati         : Gujarat Samachar, Divya Bhaskar, Sandesh
+
+------------------------------------------------------------
+13. LANGUAGES SUPPORTED (20)
+------------------------------------------------------------
+Indian      : English, Hindi, Telugu, Tamil, Kannada,
+              Malayalam, Marathi, Bengali, Gujarati,
+              Punjabi, Urdu, Odia
+International: French, German, Spanish, Arabic,
+               Chinese, Japanese, Portuguese, Russian
+
+------------------------------------------------------------
+14. CITIES COVERED (90+)
+------------------------------------------------------------
+AP        : Vizag, Vizag-Gajuwaka, Vizag-MVP, Vijayawada,
+            Guntur, Tirupati, Kurnool, Nellore, Rajahmundry,
+            Kakinada, Eluru, Ongole, Kadapa, Anantapur,
+            Srikakulam, Vizianagaram
+Telangana : Hyderabad, Secunderabad, HiTech City, LB Nagar,
+            Warangal, Karimnagar, Nizamabad, Khammam,
+            Nalgonda, Adilabad
+TN        : Chennai, Coimbatore, Madurai, Salem, Trichy
+Karnataka : Bangalore, Mysore, Mangalore, Hubli, Belgaum
+Kerala    : Kochi, Thiruvananthapuram, Kozhikode, Thrissur
+MH        : Mumbai, Pune, Nagpur, Nashik, Aurangabad
+Delhi NCR : New Delhi, Noida, Gurgaon, Faridabad
+WB        : Kolkata, Siliguri
+Gujarat   : Ahmedabad, Surat, Vadodara, Rajkot
+Rajasthan : Jaipur, Jodhpur, Udaipur, Kota
+Punjab    : Chandigarh, Amritsar, Ludhiana, Jalandhar
+UP        : Lucknow, Kanpur, Varanasi, Agra, Prayagraj
+Bihar     : Patna, Gaya, Ranchi, Jamshedpur
+Odisha    : Bhubaneswar, Cuttack
+MP        : Bhopal, Indore, Jabalpur, Gwalior
+Others    : Guwahati, Raipur
+
+------------------------------------------------------------
+15. FEATURES
+------------------------------------------------------------
+- User Register / Login / Logout
+- Encrypted passwords (Django auth)
+- Per-user saved preferences in database
+- Live news from RSS feeds (real-time)
+- NewsAPI fallback for more coverage
+- Filter by: Language, Newspaper, City, Date, Keywords
+- Save preferences checkbox
+- Keyword-based recommendations section
+- Grouped newspaper dropdown by language
+- Responsive card-based news UI
+- Admin panel for managing users
+
+------------------------------------------------------------
+16. HOW TO CONTINUE THIS PROJECT IN FUTURE CHAT
+------------------------------------------------------------
+Tell Amazon Q:
+"I have a Django newspaper project on GitHub at
+https://github.com/JASWANTH1726/newshub-django
+Project is at C:\Users\jaswa\Downloads\ML project\myproject
+Help me continue adding features to it."
+
+Then use @filename to share specific files for editing.
+
+============================================================
+END OF NOTES
+============================================================

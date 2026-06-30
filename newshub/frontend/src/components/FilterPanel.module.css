@@ -79,3 +79,9 @@
   border-color: #e11d48;
   background: white;
 }
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}

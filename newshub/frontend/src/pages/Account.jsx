@@ -4,6 +4,114 @@ import Navbar from '../components/Navbar';
 import api from '../services/api';
 import styles from './Account.module.css';
 
+const LANGUAGES = [
+  { value: 'en', label: 'English' },
+  { value: 'hi', label: 'हिंदी' },
+  { value: 'te', label: 'తెలుగు' },
+  { value: 'ta', label: 'தமிழ்' },
+  { value: 'kn', label: 'ಕನ್ನಡ' },
+  { value: 'ml', label: 'മലയാളം' },
+  { value: 'mr', label: 'मराठी' },
+  { value: 'bn', label: 'বাংলা' },
+  { value: 'gu', label: 'ગુજરાતી' },
+  { value: 'pa', label: 'ਪੰਜਾਬੀ' },
+];
+
+const AREAS = [
+  { value: 'national', label: 'National (All India)' },
+  { value: 'international', label: 'International' },
+  { label: '── Andhra Pradesh ──', disabled: true },
+  { value: 'vizag', label: 'Vizag (Visakhapatnam)' },
+  { value: 'vijayawada', label: 'Vijayawada' },
+  { value: 'guntur', label: 'Guntur' },
+  { value: 'tirupati', label: 'Tirupati' },
+  { value: 'kurnool', label: 'Kurnool' },
+  { value: 'nellore', label: 'Nellore' },
+  { value: 'rajahmundry', label: 'Rajahmundry' },
+  { value: 'kakinada', label: 'Kakinada' },
+  { label: '── Telangana ──', disabled: true },
+  { value: 'hyderabad', label: 'Hyderabad' },
+  { value: 'hyderabad_hitech', label: 'Hyderabad - HiTech City' },
+  { value: 'warangal', label: 'Warangal' },
+  { value: 'karimnagar', label: 'Karimnagar' },
+  { value: 'nizamabad', label: 'Nizamabad' },
+  { label: '── Tamil Nadu ──', disabled: true },
+  { value: 'chennai', label: 'Chennai' },
+  { value: 'coimbatore', label: 'Coimbatore' },
+  { value: 'madurai', label: 'Madurai' },
+  { label: '── Karnataka ──', disabled: true },
+  { value: 'bangalore', label: 'Bangalore' },
+  { value: 'mysore', label: 'Mysore' },
+  { value: 'mangalore', label: 'Mangalore' },
+  { label: '── Kerala ──', disabled: true },
+  { value: 'kochi', label: 'Kochi' },
+  { value: 'thiruvananthapuram', label: 'Thiruvananthapuram' },
+  { label: '── Maharashtra ──', disabled: true },
+  { value: 'mumbai', label: 'Mumbai' },
+  { value: 'pune', label: 'Pune' },
+  { value: 'nagpur', label: 'Nagpur' },
+  { label: '── Delhi / NCR ──', disabled: true },
+  { value: 'delhi', label: 'New Delhi' },
+  { value: 'noida', label: 'Noida' },
+  { value: 'gurgaon', label: 'Gurgaon' },
+  { label: '── West Bengal ──', disabled: true },
+  { value: 'kolkata', label: 'Kolkata' },
+  { label: '── Gujarat ──', disabled: true },
+  { value: 'ahmedabad', label: 'Ahmedabad' },
+  { value: 'surat', label: 'Surat' },
+  { label: '── Rajasthan ──', disabled: true },
+  { value: 'jaipur', label: 'Jaipur' },
+  { value: 'jodhpur', label: 'Jodhpur' },
+  { label: '── Punjab / Haryana ──', disabled: true },
+  { value: 'chandigarh', label: 'Chandigarh' },
+  { value: 'amritsar', label: 'Amritsar' },
+  { label: '── Uttar Pradesh ──', disabled: true },
+  { value: 'lucknow', label: 'Lucknow' },
+  { value: 'kanpur', label: 'Kanpur' },
+  { value: 'varanasi', label: 'Varanasi' },
+];
+
+const NEWSPAPERS = [
+  { value: '', label: '-- No preference --' },
+  { label: '── English National ──', disabled: true },
+  { value: 'times_of_india', label: 'Times of India' },
+  { value: 'the_hindu', label: 'The Hindu' },
+  { value: 'indian_express', label: 'The Indian Express' },
+  { value: 'hindustan_times', label: 'Hindustan Times' },
+  { value: 'deccan_herald', label: 'Deccan Herald' },
+  { value: 'economic_times', label: 'Economic Times' },
+  { value: 'business_standard', label: 'Business Standard' },
+  { label: '── English International ──', disabled: true },
+  { value: 'bbc', label: 'BBC News' },
+  { value: 'reuters', label: 'Reuters' },
+  { value: 'guardian', label: 'The Guardian' },
+  { value: 'al_jazeera', label: 'Al Jazeera' },
+  { value: 'cnn', label: 'CNN' },
+  { label: '── Hindi ──', disabled: true },
+  { value: 'dainik_jagran', label: 'Dainik Jagran' },
+  { value: 'dainik_bhaskar', label: 'Dainik Bhaskar' },
+  { value: 'amar_ujala', label: 'Amar Ujala' },
+  { label: '── Telugu ──', disabled: true },
+  { value: 'eenadu', label: 'Eenadu' },
+  { value: 'sakshi', label: 'Sakshi' },
+  { value: 'andhrajyothy', label: 'Andhra Jyothy' },
+  { label: '── Tamil ──', disabled: true },
+  { value: 'daily_thanthi', label: 'Dina Thanthi' },
+  { value: 'dinamalar', label: 'Dinamalar' },
+  { label: '── Kannada ──', disabled: true },
+  { value: 'vijaya_karnataka', label: 'Vijaya Karnataka' },
+  { value: 'prajavani', label: 'Prajavani' },
+  { label: '── Malayalam ──', disabled: true },
+  { value: 'malayala_manorama', label: 'Malayala Manorama' },
+  { value: 'mathrubhumi', label: 'Mathrubhumi' },
+  { label: '── Marathi ──', disabled: true },
+  { value: 'lokmat', label: 'Lokmat' },
+  { label: '── Bengali ──', disabled: true },
+  { value: 'anandabazar', label: 'Anandabazar Patrika' },
+  { label: '── Gujarati ──', disabled: true },
+  { value: 'gujarat_samachar', label: 'Gujarat Samachar' },
+];
+
 export default function Account() {
   const { user, updateUser } = useAuth();
   const [email, setEmail] = useState(user?.email || '');
@@ -12,16 +120,20 @@ export default function Account() {
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(false);
 
+  const showMsg = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage({ type: '', text: '' }), 4000);
+  };
+
   const handleUpdateProfile = async e => {
     e.preventDefault();
     setLoading(true);
-    setMessage({ type: '', text: '' });
     try {
       const res = await api.put('/api/user/profile', { email });
       updateUser(res.data.user);
-      setMessage({ type: 'success', text: 'Profile updated successfully!' });
+      showMsg('success', 'Profile updated successfully!');
     } catch (err) {
-      setMessage({ type: 'error', text: err.response?.data?.message || 'Update failed' });
+      showMsg('error', err.response?.data?.message || 'Update failed');
     } finally {
       setLoading(false);
     }
@@ -30,7 +142,6 @@ export default function Account() {
   const handleChangePassword = async e => {
     e.preventDefault();
     setLoading(true);
-    setMessage({ type: '', text: '' });
     try {
       await api.put('/api/user/password', {
         oldPassword: passwords.old,
@@ -38,9 +149,9 @@ export default function Account() {
         confirmPassword: passwords.confirm,
       });
       setPasswords({ old: '', new: '', confirm: '' });
-      setMessage({ type: 'success', text: 'Password changed successfully!' });
+      showMsg('success', 'Password changed successfully!');
     } catch (err) {
-      setMessage({ type: 'error', text: err.response?.data?.message || 'Password change failed' });
+      showMsg('error', err.response?.data?.message || 'Password change failed');
     } finally {
       setLoading(false);
     }
@@ -49,13 +160,12 @@ export default function Account() {
   const handleUpdatePreferences = async e => {
     e.preventDefault();
     setLoading(true);
-    setMessage({ type: '', text: '' });
     try {
       const res = await api.put('/api/user/preferences', prefs);
       updateUser({ preferences: res.data.preferences });
-      setMessage({ type: 'success', text: 'Preferences saved!' });
+      showMsg('success', 'Preferences saved!');
     } catch (err) {
-      setMessage({ type: 'error', text: err.response?.data?.message || 'Save failed' });
+      showMsg('error', err.response?.data?.message || 'Save failed');
     } finally {
       setLoading(false);
     }
@@ -68,11 +178,12 @@ export default function Account() {
         <h1 className={styles.title}>⚙️ Account Settings</h1>
 
         {message.text && (
-          <div className={message.type === 'success' ? 'success-msg' : 'error-msg'}>
-            {message.text}
+          <div className={`${styles.alert} ${message.type === 'success' ? styles.success : styles.error}`}>
+            {message.type === 'success' ? '✅' : '❌'} {message.text}
           </div>
         )}
 
+        {/* Profile */}
         <section className={styles.section}>
           <h2>👤 Profile</h2>
           <form onSubmit={handleUpdateProfile}>
@@ -95,6 +206,7 @@ export default function Account() {
           </form>
         </section>
 
+        {/* Change Password */}
         <section className={styles.section}>
           <h2>🔒 Change Password</h2>
           <form onSubmit={handleChangePassword}>
@@ -119,6 +231,7 @@ export default function Account() {
           </form>
         </section>
 
+        {/* Preferences */}
         <section className={styles.section}>
           <h2>📰 Preferences</h2>
           <form onSubmit={handleUpdatePreferences}>
@@ -129,10 +242,9 @@ export default function Account() {
                   value={prefs.uiLanguage || 'en'}
                   onChange={e => setPrefs(p => ({ ...p, uiLanguage: e.target.value }))}
                 >
-                  <option value="en">English</option>
-                  <option value="hi">हिंदी</option>
-                  <option value="te">తెలుగు</option>
-                  <option value="ta">தமிழ்</option>
+                  {LANGUAGES.map(l => (
+                    <option key={l.value} value={l.value}>{l.label}</option>
+                  ))}
                 </select>
               </div>
               <div className={styles.field}>
@@ -141,33 +253,43 @@ export default function Account() {
                   value={prefs.newsLanguage || 'en'}
                   onChange={e => setPrefs(p => ({ ...p, newsLanguage: e.target.value }))}
                 >
-                  <option value="en">English</option>
-                  <option value="hi">हिंदी</option>
-                  <option value="te">తెలుగు</option>
-                  <option value="ta">தமிழ்</option>
+                  {LANGUAGES.map(l => (
+                    <option key={l.value} value={l.value}>{l.label}</option>
+                  ))}
                 </select>
               </div>
               <div className={styles.field}>
-                <label>📍 Area</label>
-                <input
-                  type="text"
-                  value={prefs.area || ''}
+                <label>📍 Default Area</label>
+                <select
+                  value={prefs.area || 'national'}
                   onChange={e => setPrefs(p => ({ ...p, area: e.target.value }))}
-                />
+                >
+                  {AREAS.map((a, i) =>
+                    a.disabled
+                      ? <option key={i} disabled>{a.label}</option>
+                      : <option key={a.value} value={a.value}>{a.label}</option>
+                  )}
+                </select>
               </div>
               <div className={styles.field}>
-                <label>🗞️ Newspaper</label>
-                <input
-                  type="text"
+                <label>🗞️ Default Newspaper</label>
+                <select
                   value={prefs.newspaper || ''}
                   onChange={e => setPrefs(p => ({ ...p, newspaper: e.target.value }))}
-                />
+                >
+                  {NEWSPAPERS.map((n, i) =>
+                    n.disabled
+                      ? <option key={i} disabled>{n.label}</option>
+                      : <option key={n.value} value={n.value}>{n.label}</option>
+                  )}
+                </select>
               </div>
             </div>
             <div className={styles.field}>
               <label>🔖 Keywords (comma-separated)</label>
               <textarea
                 rows={3}
+                placeholder="e.g. technology, cricket, politics"
                 value={prefs.keywords || ''}
                 onChange={e => setPrefs(p => ({ ...p, keywords: e.target.value }))}
               />

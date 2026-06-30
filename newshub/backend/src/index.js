@@ -15,7 +15,14 @@ const app = express();
 
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, curl) or any vercel/localhost origin
+    if (!origin || origin.includes('vercel.app') || origin.includes('localhost')) {
+      callback(null, true);
+    } else {
+      callback(null, true); // allow all for now
+    }
+  },
   credentials: true,
 }));
 app.use(express.json({ limit: '10kb' }));
@@ -52,7 +59,10 @@ app.use((err, req, res, next) => {
 });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 10000,
+  socketTimeoutMS: 45000,
+})
   .then(() => {
     console.log('MongoDB connected');
     const PORT = process.env.PORT || 5000;

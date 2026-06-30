@@ -48,7 +48,7 @@ export default function Login() {
                 onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
               />
               <button type="button" className={styles.eyeBtn} onClick={() => setShowPassword(s => !s)}>
-                {showPassword ? '🙈' : '👁️'}
+                {showPassword ? 'Hide' : 'Show'}
               </button>
             </div>
           </div>

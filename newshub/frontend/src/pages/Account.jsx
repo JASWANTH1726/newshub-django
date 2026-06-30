@@ -270,7 +270,7 @@ export default function Account() {
                     className={styles.eyeBtn}
                     onClick={() => setShowPw(s => ({ ...s, [key]: !s[key] }))}
                   >
-                    {showPw[key] ? '🙈' : '👁️'}
+                    {showPw[key] ? 'Hide' : 'Show'}
                   </button>
                 </div>
               </div>

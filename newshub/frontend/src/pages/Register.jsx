@@ -55,7 +55,7 @@ export default function Register() {
                     className={styles.eyeBtn}
                     onClick={() => setShowPasswords(s => ({ ...s, [name]: !s[name] }))}
                   >
-                    {showPasswords[name] ? '🙈' : '👁️'}
+                    {showPasswords[name] ? 'Hide' : 'Show'}
                   </button>
                 </div>
               ) : (

@@ -7,6 +7,7 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ username: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -40,11 +41,16 @@ export default function Login() {
           </div>
           <div className={styles.field}>
             <label>Password</label>
-            <input
-              type="password" required
-              value={form.password}
-              onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-            />
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showPassword ? 'text' : 'password'} required
+                value={form.password}
+                onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+              />
+              <button type="button" className={styles.eyeBtn} onClick={() => setShowPassword(s => !s)}>
+                {showPassword ? '🙈' : '👁️'}
+              </button>
+            </div>
           </div>
           {error && <p className="error-msg">{error}</p>}
           <button type="submit" className={`btn-primary ${styles.submit}`} disabled={loading}>

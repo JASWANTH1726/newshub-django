@@ -149,6 +149,7 @@ export default function Account() {
   const { user, updateUser } = useAuth();
   const [email, setEmail] = useState(user?.email || '');
   const [passwords, setPasswords] = useState({ old: '', new: '', confirm: '' });
+  const [showPw, setShowPw] = useState({ old: false, new: false, confirm: false });
   const [prefs, setPrefs] = useState(user?.preferences || {});
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(false);
@@ -257,12 +258,21 @@ export default function Account() {
             ].map(({ key, label }) => (
               <div className={styles.field} key={key}>
                 <label>{label}</label>
-                <input
-                  type="password"
-                  value={passwords[key]}
-                  onChange={e => setPasswords(p => ({ ...p, [key]: e.target.value }))}
-                  required
-                />
+                <div className={styles.passwordWrapper}>
+                  <input
+                    type={showPw[key] ? 'text' : 'password'}
+                    value={passwords[key]}
+                    onChange={e => setPasswords(p => ({ ...p, [key]: e.target.value }))}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className={styles.eyeBtn}
+                    onClick={() => setShowPw(s => ({ ...s, [key]: !s[key] }))}
+                  >
+                    {showPw[key] ? '🙈' : '👁️'}
+                  </button>
+                </div>
               </div>
             ))}
             <button type="submit" className="btn-primary" disabled={loading}>

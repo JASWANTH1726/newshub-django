@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import styles from './FilterPanel.module.css';
 
@@ -68,46 +68,80 @@ const AREAS = [
   { value: 'varanasi', label: 'Varanasi' },
 ];
 
-const NEWSPAPERS = [
-  { value: '', label: '-- All Newspapers --' },
-  { label: '── English National ──', disabled: true },
-  { value: 'times_of_india', label: 'Times of India' },
-  { value: 'the_hindu', label: 'The Hindu' },
-  { value: 'indian_express', label: 'The Indian Express' },
-  { value: 'hindustan_times', label: 'Hindustan Times' },
-  { value: 'deccan_herald', label: 'Deccan Herald' },
-  { value: 'economic_times', label: 'Economic Times' },
-  { value: 'business_standard', label: 'Business Standard' },
-  { label: '── English International ──', disabled: true },
-  { value: 'bbc', label: 'BBC News' },
-  { value: 'reuters', label: 'Reuters' },
-  { value: 'guardian', label: 'The Guardian' },
-  { value: 'al_jazeera', label: 'Al Jazeera' },
-  { value: 'cnn', label: 'CNN' },
-  { label: '── Hindi ──', disabled: true },
-  { value: 'dainik_jagran', label: 'Dainik Jagran' },
-  { value: 'dainik_bhaskar', label: 'Dainik Bhaskar' },
-  { value: 'amar_ujala', label: 'Amar Ujala' },
-  { label: '── Telugu ──', disabled: true },
-  { value: 'eenadu', label: 'Eenadu' },
-  { value: 'sakshi', label: 'Sakshi' },
-  { value: 'andhrajyothy', label: 'Andhra Jyothy' },
-  { label: '── Tamil ──', disabled: true },
-  { value: 'daily_thanthi', label: 'Dina Thanthi' },
-  { value: 'dinamalar', label: 'Dinamalar' },
-  { label: '── Kannada ──', disabled: true },
-  { value: 'vijaya_karnataka', label: 'Vijaya Karnataka' },
-  { value: 'prajavani', label: 'Prajavani' },
-  { label: '── Malayalam ──', disabled: true },
-  { value: 'malayala_manorama', label: 'Malayala Manorama' },
-  { value: 'mathrubhumi', label: 'Mathrubhumi' },
-  { label: '── Marathi ──', disabled: true },
-  { value: 'lokmat', label: 'Lokmat' },
-  { label: '── Bengali ──', disabled: true },
-  { value: 'anandabazar', label: 'Anandabazar Patrika' },
-  { label: '── Gujarati ──', disabled: true },
-  { value: 'gujarat_samachar', label: 'Gujarat Samachar' },
-];
+// Newspapers grouped by language
+const NEWSPAPERS_BY_LANG = {
+  en: [
+    { value: '', label: '-- All Newspapers --' },
+    { label: '── National ──', disabled: true },
+    { value: 'times_of_india', label: 'Times of India' },
+    { value: 'the_hindu', label: 'The Hindu' },
+    { value: 'indian_express', label: 'The Indian Express' },
+    { value: 'hindustan_times', label: 'Hindustan Times' },
+    { value: 'deccan_herald', label: 'Deccan Herald' },
+    { value: 'economic_times', label: 'Economic Times' },
+    { value: 'business_standard', label: 'Business Standard' },
+    { label: '── International ──', disabled: true },
+    { value: 'bbc', label: 'BBC News' },
+    { value: 'reuters', label: 'Reuters' },
+    { value: 'guardian', label: 'The Guardian' },
+    { value: 'al_jazeera', label: 'Al Jazeera' },
+    { value: 'cnn', label: 'CNN' },
+  ],
+  hi: [
+    { value: '', label: '-- All Newspapers --' },
+    { value: 'dainik_jagran', label: 'Dainik Jagran' },
+    { value: 'dainik_bhaskar', label: 'Dainik Bhaskar' },
+    { value: 'amar_ujala', label: 'Amar Ujala' },
+    { value: 'hindustan_hindi', label: 'Hindustan (Hindi)' },
+    { value: 'navbharat_times', label: 'Navbharat Times' },
+    { value: 'rajasthan_patrika', label: 'Rajasthan Patrika' },
+    { value: 'jansatta', label: 'Jansatta' },
+  ],
+  te: [
+    { value: '', label: '-- All Newspapers --' },
+    { value: 'eenadu', label: 'Eenadu' },
+    { value: 'sakshi', label: 'Sakshi' },
+    { value: 'andhrajyothy', label: 'Andhra Jyothy' },
+    { value: 'namaste_telangana', label: 'Namasthe Telangana' },
+    { value: 'telangana_today', label: 'Telangana Today' },
+    { value: 'vaartha', label: 'Vaartha' },
+    { value: 'great_andhra', label: 'Great Andhra' },
+  ],
+  ta: [
+    { value: '', label: '-- All Newspapers --' },
+    { value: 'daily_thanthi', label: 'Dina Thanthi' },
+    { value: 'dinamalar', label: 'Dinamalar' },
+    { value: 'dinamani', label: 'Dinamani' },
+    { value: 'maalai_malar', label: 'Maalai Malar' },
+  ],
+  kn: [
+    { value: '', label: '-- All Newspapers --' },
+    { value: 'vijaya_karnataka', label: 'Vijaya Karnataka' },
+    { value: 'prajavani', label: 'Prajavani' },
+    { value: 'vijayavani', label: 'Vijayavani' },
+    { value: 'udayavani', label: 'Udayavani' },
+  ],
+  ml: [
+    { value: '', label: '-- All Newspapers --' },
+    { value: 'malayala_manorama', label: 'Malayala Manorama' },
+    { value: 'mathrubhumi', label: 'Mathrubhumi' },
+    { value: 'deshabhimani', label: 'Deshabhimani' },
+  ],
+  mr: [
+    { value: '', label: '-- All Newspapers --' },
+    { value: 'lokmat', label: 'Lokmat' },
+    { value: 'maharashtra_times', label: 'Maharashtra Times' },
+    { value: 'pudhari', label: 'Pudhari' },
+    { value: 'sakal', label: 'Sakal' },
+  ],
+  bn: [
+    { value: '', label: '-- All Newspapers --' },
+    { value: 'anandabazar', label: 'Anandabazar Patrika' },
+    { value: 'bartaman', label: 'Bartaman Patrika' },
+    { value: 'sangbad_pratidin', label: 'Sangbad Pratidin' },
+    { value: 'telegraph_india', label: 'The Telegraph India' },
+  ],
+};
 
 export default function FilterPanel({ onFilter }) {
   const { user } = useAuth();
@@ -119,6 +153,13 @@ export default function FilterPanel({ onFilter }) {
     newspaper: pref.newspaper || '',
     fromDate: '',
   });
+
+  // Reset newspaper when language changes
+  useEffect(() => {
+    setFilters(f => ({ ...f, newspaper: '' }));
+  }, [filters.language]);
+
+  const newspapers = NEWSPAPERS_BY_LANG[filters.language] || NEWSPAPERS_BY_LANG['en'];
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -171,7 +212,7 @@ export default function FilterPanel({ onFilter }) {
                   value={filters.newspaper}
                   onChange={e => setFilters(f => ({ ...f, newspaper: e.target.value }))}
                 >
-                  {NEWSPAPERS.map((n, i) =>
+                  {newspapers.map((n, i) =>
                     n.disabled
                       ? <option key={i} disabled>{n.label}</option>
                       : <option key={n.value} value={n.value}>{n.label}</option>

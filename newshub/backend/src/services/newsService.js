@@ -138,6 +138,47 @@ const NEWSPAPER_NAME_MAP = {
   sandesh: 'Sandesh',
 };
 
+// Native script area names for filtering Indian language RSS articles
+const AREA_NATIVE_NAMES = {
+  // Telugu
+  vizag:        ['విశాఖపట్నం', 'విశాఖ', 'వైజాగ్'],
+  vijayawada:   ['విజయవాడ'],
+  guntur:       ['గుంటూరు'],
+  tirupati:     ['తిరుపతి'],
+  hyderabad:    ['హైదరాబాద్', 'హైదరాబాద'],
+  warangal:     ['వరంగల్'],
+  karimnagar:   ['కరీంనగర్'],
+  rajahmundry:  ['రాజమహేంద్రవరం', 'రాజమండ్రి'],
+  // Hindi
+  delhi:        ['दिल्ली', 'नई दिल्ली'],
+  lucknow:      ['लखनऊ'],
+  kanpur:       ['कानपुर'],
+  varanasi:     ['वाराणसी', 'बनारस'],
+  jaipur:       ['जयपुर'],
+  bhopal:       ['भोपाल'],
+  indore:       ['इंदौर'],
+  patna:        ['पटना'],
+  mumbai:       ['मुंबई'],
+  // Tamil
+  chennai:      ['சென்னை'],
+  coimbatore:   ['கோயம்புத்தூர்'],
+  madurai:      ['மதுரை'],
+  // Kannada
+  bangalore:    ['ಬೆಂಗಳೂರು', 'ಬೆಂಗಳೂರ'],
+  mysore:       ['ಮೈಸೂರು'],
+  mangalore:    ['ಮಂಗಳೂರು'],
+  // Malayalam
+  kochi:        ['കൊച്ചി'],
+  thiruvananthapuram: ['തിരുവനന്തപുരം'],
+  kozhikode:    ['കോഴിക്കോട്'],
+  // Marathi
+  pune:         ['पुणे'],
+  nagpur:       ['नागपुर'],
+  nashik:       ['नाशिक'],
+  // Bengali
+  kolkata:      ['কলকাতা'],
+};
+
 // Google News RSS — always works, language+topic aware
 function googleNewsRSS(query, lang) {
   const hl = lang || 'en';
@@ -242,15 +283,14 @@ async function fetchFromRSS(newspaper, area) {
       source: { name: NEWSPAPER_NAME_MAP[newspaper] || newspaper },
     }));
 
-    // If a specific area is selected (not national/international), filter by area name
+    // If a specific area is selected, filter by area name in English AND native script
     const areaName = area && AREA_QUERY_MAP[area];
     if (areaName && area !== 'national' && area !== 'international') {
-      const areaLower = areaName.toLowerCase();
-      const filtered = items.filter(a =>
-        a.title.toLowerCase().includes(areaLower) ||
-        a.description.toLowerCase().includes(areaLower)
-      );
-      // If area-filtered results exist use them, otherwise return all (area may not appear in titles)
+      const searchTerms = [areaName.toLowerCase(), ...(AREA_NATIVE_NAMES[area] || [])];
+      const filtered = items.filter(a => {
+        const text = (a.title + ' ' + a.description).toLowerCase();
+        return searchTerms.some(term => text.includes(term.toLowerCase()));
+      });
       if (filtered.length > 0) items = filtered;
     }
 

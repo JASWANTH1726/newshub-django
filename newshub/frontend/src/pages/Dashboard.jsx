@@ -17,7 +17,16 @@ export default function Dashboard() {
   const fetchNews = async (filters = {}) => {
     setLoading(true);
     try {
-      const params = new URLSearchParams(filters);
+      const pref = user?.preferences || {};
+      const merged = {
+        language: pref.newsLanguage || 'en',
+        area: pref.area || 'national',
+        newspaper: pref.newspaper || '',
+        keywords: pref.keywords || '',
+        edition: pref.edition || 'digital',
+        ...filters,
+      };
+      const params = new URLSearchParams(merged);
       const [feedRes, recRes] = await Promise.all([
         api.get(`/api/news/feed?${params}`),
         api.get('/api/news/recommendations'),

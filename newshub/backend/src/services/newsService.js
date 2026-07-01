@@ -169,12 +169,12 @@ async function fetchFromNewsAPI({ query, language = 'en', fromDate } = {}) {
   }
 }
 
-async function fetchFromRSS(newspaper) {
+async function fetchFromRSS(newspaper, area) {
   const url = NEWSPAPER_RSS[newspaper];
   if (!url) return [];
   try {
     const feed = await rssParser.parseURL(url);
-    return feed.items.slice(0, 20).map(item => ({
+    let items = feed.items.slice(0, 50).map(item => ({
       title: item.title || '',
       description: item.contentSnippet || item.summary || '',
       url: item.link || '',
@@ -182,6 +182,20 @@ async function fetchFromRSS(newspaper) {
       publishedAt: item.pubDate || item.isoDate || '',
       source: { name: NEWSPAPER_NAME_MAP[newspaper] || newspaper },
     }));
+
+    // If a specific area is selected (not national/international), filter by area name
+    const areaName = area && AREA_QUERY_MAP[area];
+    if (areaName && area !== 'national' && area !== 'international') {
+      const areaLower = areaName.toLowerCase();
+      const filtered = items.filter(a =>
+        a.title.toLowerCase().includes(areaLower) ||
+        a.description.toLowerCase().includes(areaLower)
+      );
+      // If area-filtered results exist use them, otherwise return all (area may not appear in titles)
+      if (filtered.length > 0) items = filtered;
+    }
+
+    return items.slice(0, 20);
   } catch {
     return [];
   }
@@ -189,26 +203,30 @@ async function fetchFromRSS(newspaper) {
 
 async function fetchByNewspaper(newspaper, area, language, fromDate) {
   // Try RSS first
-  const rssArticles = await fetchFromRSS(newspaper);
+  const rssArticles = await fetchFromRSS(newspaper, area);
   if (rssArticles.length > 0) return rssArticles;
 
-  // Fall back to NewsAPI with newspaper name only (avoid mixing wrong sources)
+  // RSS failed — try NewsAPI with newspaper name + area
   const paperName = NEWSPAPER_NAME_MAP[newspaper] || newspaper.replace(/_/g, ' ');
-  const results = await fetchFromNewsAPI({ query: `"${paperName}"`, language: 'en', fromDate });
-  return results.map(a => ({ ...a, source: { name: paperName } }));
+  const areaName = AREA_QUERY_MAP[area] || 'India';
+  const query = area && area !== 'national' && area !== 'international'
+    ? `"${paperName}" ${areaName}`
+    : `"${paperName}"`;
+  const results = await fetchFromNewsAPI({ query, language: 'en', fromDate });
+  if (results.length > 0) return results.map(a => ({ ...a, source: { name: paperName } }));
+
+  // Last resort: just area news so page isn't empty
+  return fetchByAreaAndLanguage(area, language, [], fromDate);
 }
 
 async function fetchByAreaAndLanguage(area, language, keywords, fromDate) {
   const areaName = AREA_QUERY_MAP[area] || 'India';
-
-  // Build smart query: keywords + area
   let query;
   if (keywords && keywords.length > 0) {
     query = `(${keywords.slice(0, 3).join(' OR ')}) ${areaName}`;
   } else {
     query = areaName;
   }
-
   return fetchFromNewsAPI({ query, language, fromDate });
 }
 

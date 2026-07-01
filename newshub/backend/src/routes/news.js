@@ -38,10 +38,6 @@ router.get('/feed', auth, async (req, res) => {
     // 2. Specific newspaper selected
     else if (newspaper) {
       articles = await fetchByNewspaper(newspaper, area, language, fromDate);
-      // If RSS/newspaper fetch returns nothing, fall back to area+keywords
-      if (!articles.length) {
-        articles = await fetchByAreaAndLanguage(area, language, keywordList, fromDate);
-      }
     }
     // 3. Area + language + keywords
     else {

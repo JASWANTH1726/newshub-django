@@ -8,13 +8,13 @@ const EPAPERS = {
   English: [
     {
       name: 'Times of India', logo: '🗞️',
-      url: 'https://epaper.timesgroup.com/',
+      url: 'https://epaper.timesgroup.com/TOI/TimesOfIndia/Delhi/Home',
       dateUrl: null,
     },
     {
       name: 'The Hindu', logo: '🗞️',
       url: 'https://epaper.thehindu.com/',
-      dateUrl: (dd, mm, yyyy) => `https://epaper.thehindu.com/reader`,
+      dateUrl: null,
     },
     {
       name: 'Indian Express', logo: '🗞️',
@@ -23,7 +23,7 @@ const EPAPERS = {
     },
     {
       name: 'Hindustan Times', logo: '🗞️',
-      url: 'https://epaper.hindustantimes.com/',
+      url: 'https://epaper.hindustantimes.com/epaper/viewer.aspx',
       dateUrl: null,
     },
     {
@@ -47,18 +47,8 @@ const EPAPERS = {
       dateUrl: null,
     },
     {
-      name: 'Financial Express', logo: '📊',
-      url: 'https://epaper.financialexpress.com/',
-      dateUrl: null,
-    },
-    {
-      name: 'The Tribune', logo: '🗞️',
-      url: 'https://epaper.tribuneindia.com/',
-      dateUrl: null,
-    },
-    {
       name: 'The Hans India', logo: '🗞️',
-      url: 'https://epaper.thehansindia.com/',
+      url: 'https://www.thehansindia.com/epaper',
       dateUrl: null,
     },
   ],
@@ -71,12 +61,12 @@ const EPAPERS = {
     {
       name: 'Sakshi', logo: '📰',
       url: 'https://epaper.sakshi.com/',
-      dateUrl: (dd, mm, yyyy) => `https://epaper.sakshi.com/epaper/${yyyy}/${mm}/${dd}`,
+      dateUrl: (dd, mm, yyyy) => `https://epaper.sakshi.com/Home/Index?date=${dd}-${mm}-${yyyy}`,
     },
     {
       name: 'Andhra Jyothy', logo: '📰',
       url: 'https://epaper.andhrajyothy.com/',
-      dateUrl: null,
+      dateUrl: (dd, mm, yyyy) => `https://epaper.andhrajyothy.com/Home/Index?date=${dd}-${mm}-${yyyy}`,
     },
     {
       name: 'Namasthe Telangana', logo: '📰',
@@ -98,17 +88,17 @@ const EPAPERS = {
     {
       name: 'Dainik Jagran', logo: '📰',
       url: 'https://epaper.jagran.com/',
-      dateUrl: (dd, mm, yyyy) => `https://epaper.jagran.com/edition/date/${yyyy}-${mm}-${dd}`,
+      dateUrl: (dd, mm, yyyy) => `https://epaper.jagran.com/epaper/read.aspx?date=${yyyy}-${mm}-${dd}`,
     },
     {
       name: 'Dainik Bhaskar', logo: '📰',
       url: 'https://epaper.bhaskar.com/',
-      dateUrl: (dd, mm, yyyy) => `https://epaper.bhaskar.com/?date=${yyyy}-${mm}-${dd}`,
+      dateUrl: (dd, mm, yyyy) => `https://epaper.bhaskar.com/epaper/read.aspx?date=${yyyy}-${mm}-${dd}`,
     },
     {
       name: 'Amar Ujala', logo: '📰',
       url: 'https://epaper.amarujala.com/',
-      dateUrl: (dd, mm, yyyy) => `https://epaper.amarujala.com/?date=${yyyy}-${mm}-${dd}`,
+      dateUrl: (dd, mm, yyyy) => `https://epaper.amarujala.com/svww_index1.php?Iss_dt=${dd}-${mm}-${yyyy}`,
     },
     {
       name: 'Hindustan (Hindi)', logo: '📰',
@@ -117,7 +107,7 @@ const EPAPERS = {
     },
     {
       name: 'Navbharat Times', logo: '📰',
-      url: 'https://epaper.navbharattimes.com/',
+      url: 'https://epaper.navbharattimes.indiatimes.com/',
       dateUrl: null,
     },
     {
@@ -129,13 +119,13 @@ const EPAPERS = {
   Tamil: [
     {
       name: 'Dina Thanthi', logo: '📰',
-      url: 'https://epaper.dinathanthi.com/',
-      dateUrl: (dd, mm, yyyy) => `https://epaper.dinathanthi.com/epaper/${yyyy}/${mm}/${dd}`,
+      url: 'https://epaper.dinathanthi.net/',
+      dateUrl: (dd, mm, yyyy) => `https://epaper.dinathanthi.net/Home/Index?date=${dd}-${mm}-${yyyy}`,
     },
     {
       name: 'Dinamalar', logo: '📰',
       url: 'https://epaper.dinamalar.com/',
-      dateUrl: null,
+      dateUrl: (dd, mm, yyyy) => `https://epaper.dinamalar.com/epaper/index.php?date=${yyyy}-${mm}-${dd}`,
     },
     {
       name: 'Dinamani', logo: '📰',
@@ -143,8 +133,8 @@ const EPAPERS = {
       dateUrl: null,
     },
     {
-      name: 'Daily Thanthi', logo: '📰',
-      url: 'https://epaper.dailythanthi.com/',
+      name: 'Maalai Malar', logo: '📰',
+      url: 'https://epaper.maalaimalar.com/',
       dateUrl: null,
     },
   ],

@@ -64,21 +64,36 @@ const NEWSPAPER_RSS = {
   business_standard:'https://www.business-standard.com/rss/home_page_top_stories.rss',
   // Telugu
   eenadu:           'https://www.eenadu.net/rss/telugu-news.xml',
-  sakshi:           'https://www.sakshi.com/rss/news',
-  andhrajyothy:     'https://www.andhrajyothy.com/rss',
+  sakshi:           'https://www.sakshi.com/rss/telugu-news.xml',
+  andhrajyothy:     'https://www.andhrajyothy.com/rss/top-news.xml',
+  namaste_telangana:'https://www.namasttelangana.com/rss/top-news.xml',
+  telangana_today:  'https://telanganatoday.com/feed',
+  vaartha:          'https://www.vaartha.com/feed',
   // Hindi
   dainik_jagran:    'https://www.jagran.com/rss/news-national.xml',
   dainik_bhaskar:   'https://www.bhaskar.com/rss-feed/8491/',
   amar_ujala:       'https://www.amarujala.com/rss/breaking-news.xml',
   navbharat_times:  'https://navbharattimes.indiatimes.com/rssfeedstopstories.cms',
+  hindustan_hindi:  'https://www.livehindustan.com/rss/national.xml',
+  rajasthan_patrika:'https://www.patrika.com/rss/national-news.xml',
+  // Tamil
+  daily_thanthi:    'https://www.dailythanthi.com/rss/home',
+  dinamalar:        'https://www.dinamalar.com/rss/news.xml',
+  dinamani:         'https://www.dinamani.com/rss/all-news.xml',
+  // Kannada
+  vijaya_karnataka: 'https://vijaykarnataka.com/rssfeedstopstories.cms',
+  prajavani:        'https://www.prajavani.net/feed',
   // Malayalam
   malayala_manorama:'https://www.manoramaonline.com/rss/news.xml',
-  mathrubhumi:      'https://www.mathrubhumi.com/rss',
+  mathrubhumi:      'https://www.mathrubhumi.com/rss/news.xml',
+  deshabhimani:     'https://www.deshabhimani.com/rss',
   // Marathi
   lokmat:           'https://www.lokmat.com/rss.xml',
   maharashtra_times:'https://maharashtratimes.com/rssfeedstopstories.cms',
+  sakal:            'https://www.sakal.com/rss/top-news.xml',
   // Bengali
-  anandabazar:      'https://www.anandabazar.com/rss',
+  anandabazar:      'https://www.anandabazar.com/rss/latest-news.xml',
+  sangbad_pratidin: 'https://www.sangbadpratidin.in/feed',
   // Gujarati
   gujarat_samachar: 'https://www.gujaratsamachar.com/rss',
   divya_bhaskar:    'https://www.divyabhaskar.co.in/rss-feed/8491/',
@@ -165,10 +180,10 @@ async function fetchByNewspaper(newspaper, area, language, fromDate) {
   const rssArticles = await fetchFromRSS(newspaper);
   if (rssArticles.length > 0) return rssArticles;
 
-  // Fall back to NewsAPI with newspaper name + area
+  // Fall back to NewsAPI with newspaper name only (avoid mixing wrong sources)
   const paperName = NEWSPAPER_NAME_MAP[newspaper] || newspaper.replace(/_/g, ' ');
-  const areaName = AREA_QUERY_MAP[area] || 'India';
-  return fetchFromNewsAPI({ query: `"${paperName}" OR "${areaName}"`, language, fromDate });
+  const results = await fetchFromNewsAPI({ query: `"${paperName}"`, language: 'en', fromDate });
+  return results.map(a => ({ ...a, source: { name: paperName } }));
 }
 
 async function fetchByAreaAndLanguage(area, language, keywords, fromDate) {

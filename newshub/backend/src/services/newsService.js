@@ -50,18 +50,20 @@ const AREA_QUERY_MAP = {
 
 // RSS feeds for newspapers
 const NEWSPAPER_RSS = {
-  // English
+  // English - National
   times_of_india:   'https://timesofindia.indiatimes.com/rssfeedstopstories.cms',
   the_hindu:        'https://www.thehindu.com/news/feeder/default.rss',
   indian_express:   'https://indianexpress.com/feed/',
   hindustan_times:  'https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml',
   deccan_herald:    'https://www.deccanherald.com/rss-feed/national.rss',
-  bbc:              'http://feeds.bbci.co.uk/news/world/rss.xml',
+  economic_times:   'https://economictimes.indiatimes.com/rssfeedstopstories.cms',
+  business_standard:'https://www.business-standard.com/rss/home_page_top_stories.rss',
+  // English - International
+  bbc:              'https://feeds.bbci.co.uk/news/world/rss.xml',
   reuters:          'https://feeds.reuters.com/reuters/topNews',
   guardian:         'https://www.theguardian.com/world/rss',
   al_jazeera:       'https://www.aljazeera.com/xml/rss/all.xml',
-  economic_times:   'https://economictimes.indiatimes.com/rssfeedstopstories.cms',
-  business_standard:'https://www.business-standard.com/rss/home_page_top_stories.rss',
+  cnn:              'http://rss.cnn.com/rss/edition.rss',
   // Telugu
   eenadu:           'https://www.eenadu.net/rss/telugu-news.xml',
   sakshi:           'https://www.sakshi.com/rss/telugu-news.xml',
@@ -69,6 +71,7 @@ const NEWSPAPER_RSS = {
   namaste_telangana:'https://www.namasttelangana.com/rss/top-news.xml',
   telangana_today:  'https://telanganatoday.com/feed',
   vaartha:          'https://www.vaartha.com/feed',
+  great_andhra:     'https://www.greatandhra.com/rss/news.xml',
   // Hindi
   dainik_jagran:    'https://www.jagran.com/rss/news-national.xml',
   dainik_bhaskar:   'https://www.bhaskar.com/rss-feed/8491/',
@@ -76,27 +79,36 @@ const NEWSPAPER_RSS = {
   navbharat_times:  'https://navbharattimes.indiatimes.com/rssfeedstopstories.cms',
   hindustan_hindi:  'https://www.livehindustan.com/rss/national.xml',
   rajasthan_patrika:'https://www.patrika.com/rss/national-news.xml',
+  jansatta:         'https://www.jansatta.com/feed/',
   // Tamil
   daily_thanthi:    'https://www.dailythanthi.com/rss/home',
   dinamalar:        'https://www.dinamalar.com/rss/news.xml',
   dinamani:         'https://www.dinamani.com/rss/all-news.xml',
+  maalai_malar:     'https://www.maalaimalar.com/rss/news.xml',
   // Kannada
   vijaya_karnataka: 'https://vijaykarnataka.com/rssfeedstopstories.cms',
   prajavani:        'https://www.prajavani.net/feed',
+  vijayavani:       'https://www.vijayavani.net/feed',
+  udayavani:        'https://www.udayavani.com/feed',
   // Malayalam
   malayala_manorama:'https://www.manoramaonline.com/rss/news.xml',
   mathrubhumi:      'https://www.mathrubhumi.com/rss/news.xml',
   deshabhimani:     'https://www.deshabhimani.com/rss',
+  kerala_kaumudi:   'https://www.keralakaumudi.com/rss/news.xml',
   // Marathi
   lokmat:           'https://www.lokmat.com/rss.xml',
   maharashtra_times:'https://maharashtratimes.com/rssfeedstopstories.cms',
   sakal:            'https://www.sakal.com/rss/top-news.xml',
+  pudhari:          'https://epaper.pudhari.news/feed',
   // Bengali
   anandabazar:      'https://www.anandabazar.com/rss/latest-news.xml',
+  bartaman:         'https://www.bartamanpatrika.com/rss',
   sangbad_pratidin: 'https://www.sangbadpratidin.in/feed',
+  telegraph_india:  'https://www.telegraphindia.com/feeds/rss/india.xml',
   // Gujarati
   gujarat_samachar: 'https://www.gujaratsamachar.com/rss',
   divya_bhaskar:    'https://www.divyabhaskar.co.in/rss-feed/8491/',
+  sandesh:          'https://www.sandesh.com/rss/news.xml',
 };
 
 const NEWSPAPER_NAME_MAP = {

@@ -11,7 +11,6 @@ export default function Navbar() {
         <Link to="/dashboard" className={styles.logo}>📰 NewsHub</Link>
         <div className={styles.right}>
           <span className={styles.username}>👤 {user?.username}</span>
-          <Link to="/epapers" className={`btn-secondary ${styles.btn}`}>📄 E-Papers</Link>
           <Link to="/account" className={`btn-secondary ${styles.btn}`}>⚙️ Account</Link>
           <button onClick={logout} className={`btn-secondary ${styles.btn}`}>🚪 Logout</button>
         </div>

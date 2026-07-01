@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import styles from './Epapers.module.css';
 
@@ -72,38 +74,59 @@ const LANG_FLAGS = {
   Kannada: '🟡', Malayalam: '🟢', Marathi: '🟣', Bengali: '🔴', Gujarati: '🟤',
 };
 
+const LANG_CODE_MAP = {
+  en: 'English', hi: 'Hindi', te: 'Telugu', ta: 'Tamil',
+  kn: 'Kannada', ml: 'Malayalam', mr: 'Marathi', bn: 'Bengali', gu: 'Gujarati',
+};
+
 export default function Epapers() {
+  const { user } = useAuth();
+  const prefLang = LANG_CODE_MAP[user?.preferences?.newsLanguage] || 'English';
+  const [selected, setSelected] = useState(prefLang);
+
+  const languages = Object.keys(EPAPERS);
+  const papers = EPAPERS[selected] || [];
+
   return (
     <div className={styles.page}>
       <Navbar />
       <div className={styles.container}>
         <div className={styles.heading}>
           <h1>📄 E-Papers</h1>
-          <p>Read today's newspaper editions online — click any paper to open its e-paper portal</p>
+          <p>Showing e-papers based on your language preference — click any to open</p>
         </div>
 
-        {Object.entries(EPAPERS).map(([lang, papers]) => (
-          <section key={lang} className={styles.section}>
-            <h2 className={styles.langTitle}>
-              <span>{LANG_FLAGS[lang]}</span> {lang}
-            </h2>
-            <div className={styles.grid}>
-              {papers.map(paper => (
-                <a
-                  key={paper.name}
-                  href={paper.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.card}
-                >
-                  <div className={styles.cardLogo}>{paper.logo}</div>
-                  <div className={styles.cardName}>{paper.name}</div>
-                  <div className={styles.cardAction}>Read E-Paper →</div>
-                </a>
-              ))}
-            </div>
-          </section>
-        ))}
+        {/* Language tabs */}
+        <div className={styles.tabs}>
+          {languages.map(lang => (
+            <button
+              key={lang}
+              className={`${styles.tab} ${selected === lang ? styles.activeTab : ''}`}
+              onClick={() => setSelected(lang)}
+            >
+              {LANG_FLAGS[lang]} {lang}
+            </button>
+          ))}
+        </div>
+
+        {/* Papers grid */}
+        <section className={styles.section}>
+          <div className={styles.grid}>
+            {papers.map(paper => (
+              <a
+                key={paper.name}
+                href={paper.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.card}
+              >
+                <div className={styles.cardLogo}>{paper.logo}</div>
+                <div className={styles.cardName}>{paper.name}</div>
+                <div className={styles.cardAction}>Read E-Paper →</div>
+              </a>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

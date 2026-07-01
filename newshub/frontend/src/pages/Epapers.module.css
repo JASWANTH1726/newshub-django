@@ -25,6 +25,38 @@
   font-size: 0.9rem;
 }
 
+/* Language tabs */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.tab {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  border-color: #e11d48;
+  color: #f1f5f9;
+}
+
+.activeTab {
+  background: linear-gradient(135deg, #e11d48, #be123c);
+  border-color: #e11d48;
+  color: white;
+  box-shadow: 0 3px 10px rgba(225,29,72,0.3);
+}
+
 .section {
   margin-bottom: 36px;
 }

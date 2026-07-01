@@ -14,6 +14,7 @@
   padding: 14px 20px;
   background: linear-gradient(135deg, #0f172a, #1e1b4b);
   cursor: pointer;
+  user-select: none;
 }
 
 .header h3 {
@@ -25,7 +26,7 @@
 .toggle {
   color: #94a3b8;
   font-size: 1.1rem;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .toggle.open {
@@ -34,18 +35,12 @@
 
 .body {
   padding: 20px;
-  animation: fadeUp 0.3s ease;
+  animation: fadeUp 0.25s ease;
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .grid {
@@ -72,13 +67,66 @@
   font-size: 0.88rem;
   background: #f8fafc;
   color: #1e293b;
+  transition: border-color 0.2s;
 }
 
 .field input:focus,
 .field select:focus {
   border-color: #e11d48;
   background: white;
+  outline: none;
 }
+
+/* Keywords section */
+.keywordsSection {
+  margin-bottom: 16px;
+}
+
+.keywordsSection label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #e11d48, #be123c);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  animation: tagIn 0.2s ease;
+}
+
+@keyframes tagIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.tag button {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.tag button:hover { color: white; }
 
 .actions {
   display: flex;

@@ -13,62 +13,138 @@ const LANGUAGES = [
   { value: 'bn', label: 'বাংলা' },
 ];
 
-const AREAS = [
-  { value: '', label: '-- All Areas --' },
-  { value: 'national', label: 'National (All India)' },
-  { value: 'international', label: 'International' },
-  { label: '── Andhra Pradesh ──', disabled: true },
-  { value: 'vizag', label: 'Vizag (Visakhapatnam)' },
-  { value: 'vijayawada', label: 'Vijayawada' },
-  { value: 'guntur', label: 'Guntur' },
-  { value: 'tirupati', label: 'Tirupati' },
-  { value: 'kurnool', label: 'Kurnool' },
-  { value: 'nellore', label: 'Nellore' },
-  { value: 'rajahmundry', label: 'Rajahmundry' },
-  { value: 'kakinada', label: 'Kakinada' },
-  { label: '── Telangana ──', disabled: true },
-  { value: 'hyderabad', label: 'Hyderabad' },
-  { value: 'hyderabad_hitech', label: 'Hyderabad - HiTech City' },
-  { value: 'warangal', label: 'Warangal' },
-  { value: 'karimnagar', label: 'Karimnagar' },
-  { value: 'nizamabad', label: 'Nizamabad' },
-  { label: '── Tamil Nadu ──', disabled: true },
-  { value: 'chennai', label: 'Chennai' },
-  { value: 'coimbatore', label: 'Coimbatore' },
-  { value: 'madurai', label: 'Madurai' },
-  { label: '── Karnataka ──', disabled: true },
-  { value: 'bangalore', label: 'Bangalore' },
-  { value: 'mysore', label: 'Mysore' },
-  { value: 'mangalore', label: 'Mangalore' },
-  { label: '── Kerala ──', disabled: true },
-  { value: 'kochi', label: 'Kochi' },
-  { value: 'thiruvananthapuram', label: 'Thiruvananthapuram' },
-  { label: '── Maharashtra ──', disabled: true },
-  { value: 'mumbai', label: 'Mumbai' },
-  { value: 'pune', label: 'Pune' },
-  { value: 'nagpur', label: 'Nagpur' },
-  { label: '── Delhi / NCR ──', disabled: true },
-  { value: 'delhi', label: 'New Delhi' },
-  { value: 'noida', label: 'Noida' },
-  { value: 'gurgaon', label: 'Gurgaon' },
-  { label: '── West Bengal ──', disabled: true },
-  { value: 'kolkata', label: 'Kolkata' },
-  { label: '── Gujarat ──', disabled: true },
-  { value: 'ahmedabad', label: 'Ahmedabad' },
-  { value: 'surat', label: 'Surat' },
-  { label: '── Rajasthan ──', disabled: true },
-  { value: 'jaipur', label: 'Jaipur' },
-  { value: 'jodhpur', label: 'Jodhpur' },
-  { label: '── Punjab / Haryana ──', disabled: true },
-  { value: 'chandigarh', label: 'Chandigarh' },
-  { value: 'amritsar', label: 'Amritsar' },
-  { label: '── Uttar Pradesh ──', disabled: true },
-  { value: 'lucknow', label: 'Lucknow' },
-  { value: 'kanpur', label: 'Kanpur' },
-  { value: 'varanasi', label: 'Varanasi' },
-];
+const AREAS_BY_LANG = {
+  en: [
+    { value: '', label: '-- All Areas --' },
+    { value: 'national', label: 'National (All India)' },
+    { value: 'international', label: 'International' },
+    { label: '── North India ──', disabled: true },
+    { value: 'delhi', label: 'New Delhi' },
+    { value: 'noida', label: 'Noida' },
+    { value: 'gurgaon', label: 'Gurgaon' },
+    { value: 'lucknow', label: 'Lucknow' },
+    { value: 'kanpur', label: 'Kanpur' },
+    { value: 'varanasi', label: 'Varanasi' },
+    { value: 'chandigarh', label: 'Chandigarh' },
+    { value: 'amritsar', label: 'Amritsar' },
+    { label: '── South India ──', disabled: true },
+    { value: 'bangalore', label: 'Bangalore' },
+    { value: 'chennai', label: 'Chennai' },
+    { value: 'hyderabad', label: 'Hyderabad' },
+    { value: 'kochi', label: 'Kochi' },
+    { label: '── West India ──', disabled: true },
+    { value: 'mumbai', label: 'Mumbai' },
+    { value: 'pune', label: 'Pune' },
+    { value: 'ahmedabad', label: 'Ahmedabad' },
+    { label: '── East India ──', disabled: true },
+    { value: 'kolkata', label: 'Kolkata' },
+    { value: 'patna', label: 'Patna' },
+  ],
+  te: [
+    { value: '', label: '-- All Areas --' },
+    { value: 'national', label: 'National (All India)' },
+    { label: '── Andhra Pradesh ──', disabled: true },
+    { value: 'vizag', label: 'Visakhapatnam (Vizag)' },
+    { value: 'vijayawada', label: 'Vijayawada' },
+    { value: 'guntur', label: 'Guntur' },
+    { value: 'tirupati', label: 'Tirupati' },
+    { value: 'kurnool', label: 'Kurnool' },
+    { value: 'nellore', label: 'Nellore' },
+    { value: 'rajahmundry', label: 'Rajahmundry' },
+    { value: 'kakinada', label: 'Kakinada' },
+    { value: 'eluru', label: 'Eluru' },
+    { value: 'ongole', label: 'Ongole' },
+    { value: 'kadapa', label: 'Kadapa' },
+    { value: 'anantapur', label: 'Anantapur' },
+    { value: 'srikakulam', label: 'Srikakulam' },
+    { value: 'vizianagaram', label: 'Vizianagaram' },
+    { label: '── Telangana ──', disabled: true },
+    { value: 'hyderabad', label: 'Hyderabad' },
+    { value: 'hyderabad_hitech', label: 'Hyderabad - HiTech City' },
+    { value: 'hyderabad_secunderabad', label: 'Secunderabad' },
+    { value: 'warangal', label: 'Warangal' },
+    { value: 'karimnagar', label: 'Karimnagar' },
+    { value: 'nizamabad', label: 'Nizamabad' },
+    { value: 'khammam', label: 'Khammam' },
+    { value: 'nalgonda', label: 'Nalgonda' },
+    { value: 'adilabad', label: 'Adilabad' },
+  ],
+  ta: [
+    { value: '', label: '-- All Areas --' },
+    { value: 'national', label: 'National (All India)' },
+    { label: '── Tamil Nadu ──', disabled: true },
+    { value: 'chennai', label: 'Chennai' },
+    { value: 'coimbatore', label: 'Coimbatore' },
+    { value: 'madurai', label: 'Madurai' },
+    { value: 'salem', label: 'Salem' },
+    { value: 'trichy', label: 'Trichy' },
+    { value: 'tirunelveli', label: 'Tirunelveli' },
+    { value: 'vellore', label: 'Vellore' },
+    { value: 'erode', label: 'Erode' },
+  ],
+  kn: [
+    { value: '', label: '-- All Areas --' },
+    { value: 'national', label: 'National (All India)' },
+    { label: '── Karnataka ──', disabled: true },
+    { value: 'bangalore', label: 'Bangalore' },
+    { value: 'mysore', label: 'Mysore' },
+    { value: 'mangalore', label: 'Mangalore' },
+    { value: 'hubli', label: 'Hubli-Dharwad' },
+    { value: 'belgaum', label: 'Belagavi' },
+  ],
+  ml: [
+    { value: '', label: '-- All Areas --' },
+    { value: 'national', label: 'National (All India)' },
+    { label: '── Kerala ──', disabled: true },
+    { value: 'kochi', label: 'Kochi' },
+    { value: 'thiruvananthapuram', label: 'Thiruvananthapuram' },
+    { value: 'kozhikode', label: 'Kozhikode' },
+    { value: 'thrissur', label: 'Thrissur' },
+    { value: 'kollam', label: 'Kollam' },
+  ],
+  hi: [
+    { value: '', label: '-- All Areas --' },
+    { value: 'national', label: 'National (All India)' },
+    { label: '── Uttar Pradesh ──', disabled: true },
+    { value: 'lucknow', label: 'Lucknow' },
+    { value: 'kanpur', label: 'Kanpur' },
+    { value: 'varanasi', label: 'Varanasi' },
+    { value: 'agra', label: 'Agra' },
+    { value: 'meerut', label: 'Meerut' },
+    { label: '── Rajasthan ──', disabled: true },
+    { value: 'jaipur', label: 'Jaipur' },
+    { value: 'jodhpur', label: 'Jodhpur' },
+    { value: 'udaipur', label: 'Udaipur' },
+    { label: '── Madhya Pradesh ──', disabled: true },
+    { value: 'bhopal', label: 'Bhopal' },
+    { value: 'indore', label: 'Indore' },
+    { label: '── Delhi / NCR ──', disabled: true },
+    { value: 'delhi', label: 'New Delhi' },
+    { value: 'noida', label: 'Noida' },
+    { value: 'gurgaon', label: 'Gurgaon' },
+    { label: '── Bihar ──', disabled: true },
+    { value: 'patna', label: 'Patna' },
+  ],
+  mr: [
+    { value: '', label: '-- All Areas --' },
+    { value: 'national', label: 'National (All India)' },
+    { label: '── Maharashtra ──', disabled: true },
+    { value: 'mumbai', label: 'Mumbai' },
+    { value: 'pune', label: 'Pune' },
+    { value: 'nagpur', label: 'Nagpur' },
+    { value: 'nashik', label: 'Nashik' },
+    { value: 'aurangabad', label: 'Aurangabad' },
+    { value: 'solapur', label: 'Solapur' },
+  ],
+  bn: [
+    { value: '', label: '-- All Areas --' },
+    { value: 'national', label: 'National (All India)' },
+    { label: '── West Bengal ──', disabled: true },
+    { value: 'kolkata', label: 'Kolkata' },
+    { value: 'siliguri', label: 'Siliguri' },
+  ],
+};
 
-// Newspapers grouped by language
 const NEWSPAPERS_BY_LANG = {
   en: [
     { value: '', label: '-- All Newspapers --' },
@@ -152,14 +228,22 @@ export default function FilterPanel({ onFilter }) {
     area: pref.area || 'national',
     newspaper: pref.newspaper || '',
     fromDate: '',
+    keywords: pref.keywords || '',
   });
 
-  // Reset newspaper when language changes
+  // Reset area and newspaper when language changes
   useEffect(() => {
-    setFilters(f => ({ ...f, newspaper: '' }));
+    setFilters(f => ({ ...f, area: 'national', newspaper: '' }));
   }, [filters.language]);
 
+  // Sync keywords from preferences when user loads
+  useEffect(() => {
+    if (pref.keywords) setFilters(f => ({ ...f, keywords: pref.keywords }));
+  }, [pref.keywords]);
+
+  const areas = AREAS_BY_LANG[filters.language] || AREAS_BY_LANG['en'];
   const newspapers = NEWSPAPERS_BY_LANG[filters.language] || NEWSPAPERS_BY_LANG['en'];
+  const keywordList = filters.keywords ? filters.keywords.split(',').map(k => k.trim()).filter(Boolean) : [];
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -167,9 +251,14 @@ export default function FilterPanel({ onFilter }) {
   };
 
   const handleReset = () => {
-    const reset = { language: 'en', area: 'national', newspaper: '', fromDate: '' };
+    const reset = { language: 'en', area: 'national', newspaper: '', fromDate: '', keywords: pref.keywords || '' };
     setFilters(reset);
     onFilter(reset);
+  };
+
+  const removeKeyword = keyword => {
+    const updated = keywordList.filter(k => k !== keyword).join(', ');
+    setFilters(f => ({ ...f, keywords: updated }));
   };
 
   return (
@@ -199,7 +288,7 @@ export default function FilterPanel({ onFilter }) {
                   value={filters.area}
                   onChange={e => setFilters(f => ({ ...f, area: e.target.value }))}
                 >
-                  {AREAS.map((a, i) =>
+                  {areas.map((a, i) =>
                     a.disabled
                       ? <option key={i} disabled>{a.label}</option>
                       : <option key={a.value} value={a.value}>{a.label}</option>
@@ -228,6 +317,22 @@ export default function FilterPanel({ onFilter }) {
                 />
               </div>
             </div>
+
+            {/* Keywords from preferences */}
+            {keywordList.length > 0 && (
+              <div className={styles.keywordsSection}>
+                <label>🔖 Your Keywords</label>
+                <div className={styles.keywords}>
+                  {keywordList.map(k => (
+                    <span key={k} className={styles.tag}>
+                      {k}
+                      <button type="button" onClick={() => removeKeyword(k)}>×</button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className={styles.actions}>
               <button type="submit" className="btn-primary">🔍 Apply Filters</button>
               <button type="button" className="btn-secondary" onClick={handleReset}>↺ Reset</button>

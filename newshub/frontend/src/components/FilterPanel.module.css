@@ -133,3 +133,32 @@
   gap: 12px;
   margin-top: 4px;
 }
+
+/* Edition toggle */
+.editionToggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+.editionBtn {
+  padding: 7px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editionActive {
+  background: linear-gradient(135deg, #e11d48, #be123c);
+  color: white;
+  box-shadow: 0 2px 8px rgba(225,29,72,0.3);
+}

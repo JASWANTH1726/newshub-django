@@ -221,6 +221,7 @@ const NEWSPAPERS_BY_LANG = {
 
 export default function FilterPanel({ onFilter }) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const pref = user?.preferences || {};
   const [open, setOpen] = useState(false);
   const [filters, setFilters] = useState({
@@ -229,6 +230,7 @@ export default function FilterPanel({ onFilter }) {
     newspaper: pref.newspaper || '',
     fromDate: '',
     keywords: pref.keywords || '',
+    edition: pref.edition || 'digital',
   });
 
   // Reset area and newspaper when language changes
@@ -251,7 +253,7 @@ export default function FilterPanel({ onFilter }) {
   };
 
   const handleReset = () => {
-    const reset = { language: 'en', area: 'national', newspaper: '', fromDate: '', keywords: pref.keywords || '' };
+    const reset = { language: 'en', area: 'national', newspaper: '', fromDate: '', keywords: pref.keywords || '', edition: 'digital' };
     setFilters(reset);
     onFilter(reset);
   };
@@ -270,6 +272,24 @@ export default function FilterPanel({ onFilter }) {
       {open && (
         <div className={styles.body}>
           <form onSubmit={handleSubmit}>
+            {/* Edition Toggle */}
+            <div className={styles.editionToggle}>
+              <button
+                type="button"
+                className={`${styles.editionBtn} ${filters.edition === 'digital' ? styles.editionActive : ''}`}
+                onClick={() => setFilters(f => ({ ...f, edition: 'digital' }))}
+              >
+                🌐 Digital News
+              </button>
+              <button
+                type="button"
+                className={`${styles.editionBtn} ${filters.edition === 'epaper' ? styles.editionActive : ''}`}
+                onClick={() => navigate('/epapers')}
+              >
+                📄 E-Paper
+              </button>
+            </div>
+
             <div className={styles.grid}>
               <div className={styles.field}>
                 <label>📰 News Language</label>

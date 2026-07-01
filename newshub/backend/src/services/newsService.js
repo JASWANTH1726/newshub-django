@@ -138,11 +138,70 @@ const NEWSPAPER_NAME_MAP = {
   sandesh: 'Sandesh',
 };
 
-// NewsAPI language codes
-const LANG_API_MAP = {
+// Google News RSS — always works, language+topic aware
+function googleNewsRSS(query, lang) {
+  const hl = lang || 'en';
+  const gl = 'IN';
+  const encoded = encodeURIComponent(query);
+  return `https://news.google.com/rss/search?q=${encoded}&hl=${hl}-IN&gl=${gl}&ceid=${gl}:${hl}`;
+}
+
+// Language code map for Google News
+const GOOGLE_LANG = {
   en: 'en', hi: 'hi', te: 'te', ta: 'ta',
-  kn: 'kn', ml: 'ml', mr: 'mr', bn: 'bn',
+  kn: 'kn', ml: 'ml', mr: 'mr', bn: 'bn', gu: 'gu',
 };
+
+// Newspaper to Google News search query map
+const NEWSPAPER_GOOGLE_QUERY = {
+  eenadu: 'Eenadu', sakshi: 'Sakshi Telugu', andhrajyothy: 'Andhra Jyothy',
+  namaste_telangana: 'Namasthe Telangana', telangana_today: 'Telangana Today',
+  vaartha: 'Vaartha Telugu', great_andhra: 'Great Andhra',
+  dainik_jagran: 'Dainik Jagran', dainik_bhaskar: 'Dainik Bhaskar',
+  amar_ujala: 'Amar Ujala', hindustan_hindi: 'Hindustan Hindi',
+  navbharat_times: 'Navbharat Times', rajasthan_patrika: 'Rajasthan Patrika',
+  jansatta: 'Jansatta',
+  daily_thanthi: 'Dina Thanthi', dinamalar: 'Dinamalar',
+  dinamani: 'Dinamani', maalai_malar: 'Maalai Malar',
+  vijaya_karnataka: 'Vijaya Karnataka', prajavani: 'Prajavani',
+  vijayavani: 'Vijayavani', udayavani: 'Udayavani',
+  malayala_manorama: 'Malayala Manorama', mathrubhumi: 'Mathrubhumi',
+  deshabhimani: 'Deshabhimani', kerala_kaumudi: 'Kerala Kaumudi',
+  lokmat: 'Lokmat', maharashtra_times: 'Maharashtra Times',
+  sakal: 'Sakal', pudhari: 'Pudhari',
+  anandabazar: 'Anandabazar Patrika', bartaman: 'Bartaman Patrika',
+  sangbad_pratidin: 'Sangbad Pratidin', telegraph_india: 'Telegraph India',
+  gujarat_samachar: 'Gujarat Samachar', divya_bhaskar: 'Divya Bhaskar',
+  sandesh: 'Sandesh',
+  times_of_india: 'Times of India', the_hindu: 'The Hindu',
+  indian_express: 'Indian Express', hindustan_times: 'Hindustan Times',
+  deccan_herald: 'Deccan Herald', economic_times: 'Economic Times',
+  business_standard: 'Business Standard', bbc: 'BBC News',
+  reuters: 'Reuters', guardian: 'The Guardian',
+  al_jazeera: 'Al Jazeera', cnn: 'CNN',
+};
+
+async function fetchFromGoogleNews(newspaper, area, language) {
+  const paperQuery = NEWSPAPER_GOOGLE_QUERY[newspaper];
+  if (!paperQuery) return [];
+  const areaName = area && area !== 'national' && area !== 'international' && AREA_QUERY_MAP[area]
+    ? ` ${AREA_QUERY_MAP[area]}` : '';
+  const lang = GOOGLE_LANG[language] || 'en';
+  const url = googleNewsRSS(`${paperQuery}${areaName}`, lang);
+  try {
+    const feed = await rssParser.parseURL(url);
+    return feed.items.slice(0, 20).map(item => ({
+      title: item.title?.replace(/ - [^-]+$/, '') || '',
+      description: item.contentSnippet || item.summary || '',
+      url: item.link || '',
+      urlToImage: null,
+      publishedAt: item.pubDate || item.isoDate || '',
+      source: { name: NEWSPAPER_NAME_MAP[newspaper] || paperQuery },
+    }));
+  } catch {
+    return [];
+  }
+}
 
 async function fetchFromNewsAPI({ query, language = 'en', fromDate } = {}) {
   try {
@@ -202,20 +261,15 @@ async function fetchFromRSS(newspaper, area) {
 }
 
 async function fetchByNewspaper(newspaper, area, language, fromDate) {
-  // Try RSS first
+  // 1. Try direct RSS feed first
   const rssArticles = await fetchFromRSS(newspaper, area);
   if (rssArticles.length > 0) return rssArticles;
 
-  // RSS failed — try NewsAPI with newspaper name + area
-  const paperName = NEWSPAPER_NAME_MAP[newspaper] || newspaper.replace(/_/g, ' ');
-  const areaName = AREA_QUERY_MAP[area] || 'India';
-  const query = area && area !== 'national' && area !== 'international'
-    ? `"${paperName}" ${areaName}`
-    : `"${paperName}"`;
-  const results = await fetchFromNewsAPI({ query, language: 'en', fromDate });
-  if (results.length > 0) return results.map(a => ({ ...a, source: { name: paperName } }));
+  // 2. Google News RSS — works for all languages including Telugu, Hindi, Tamil etc.
+  const googleArticles = await fetchFromGoogleNews(newspaper, area, language);
+  if (googleArticles.length > 0) return googleArticles;
 
-  // Last resort: just area news so page isn't empty
+  // 3. Last resort: NewsAPI area search so page is never blank
   return fetchByAreaAndLanguage(area, language, [], fromDate);
 }
 
@@ -227,6 +281,26 @@ async function fetchByAreaAndLanguage(area, language, keywords, fromDate) {
   } else {
     query = areaName;
   }
+
+  // For Indian languages not supported by NewsAPI, use Google News RSS
+  const newsApiLangs = ['en', 'ar', 'de', 'es', 'fr', 'it', 'nl', 'no', 'pt', 'ru', 'sv', 'zh'];
+  if (!newsApiLangs.includes(language)) {
+    const lang = GOOGLE_LANG[language] || 'en';
+    const url = googleNewsRSS(query, lang);
+    try {
+      const feed = await rssParser.parseURL(url);
+      const items = feed.items.slice(0, 20).map(item => ({
+        title: item.title?.replace(/ - [^-]+$/, '') || '',
+        description: item.contentSnippet || item.summary || '',
+        url: item.link || '',
+        urlToImage: null,
+        publishedAt: item.pubDate || item.isoDate || '',
+        source: { name: item.source?.title || 'Google News' },
+      }));
+      if (items.length > 0) return items;
+    } catch { /* fall through to NewsAPI */ }
+  }
+
   return fetchFromNewsAPI({ query, language, fromDate });
 }
 
@@ -234,6 +308,24 @@ async function fetchRecommendations(keywords, area, language) {
   if (!keywords || keywords.length === 0) return [];
   const areaName = AREA_QUERY_MAP[area] || 'India';
   const query = `(${keywords.slice(0, 3).join(' OR ')}) ${areaName}`;
+
+  const newsApiLangs = ['en', 'ar', 'de', 'es', 'fr', 'it', 'nl', 'no', 'pt', 'ru', 'sv', 'zh'];
+  if (!newsApiLangs.includes(language)) {
+    const lang = GOOGLE_LANG[language] || 'en';
+    const url = googleNewsRSS(query, lang);
+    try {
+      const feed = await rssParser.parseURL(url);
+      return feed.items.slice(0, 20).map(item => ({
+        title: item.title?.replace(/ - [^-]+$/, '') || '',
+        description: item.contentSnippet || '',
+        url: item.link || '',
+        urlToImage: null,
+        publishedAt: item.pubDate || item.isoDate || '',
+        source: { name: item.source?.title || 'Google News' },
+      }));
+    } catch { /* fall through */ }
+  }
+
   return fetchFromNewsAPI({ query, language });
 }
 

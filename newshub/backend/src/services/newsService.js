@@ -117,66 +117,114 @@ const NEWSPAPER_NAME_MAP = {
   deccan_herald: 'Deccan Herald', bbc: 'BBC News', reuters: 'Reuters',
   guardian: 'The Guardian', al_jazeera: 'Al Jazeera', cnn: 'CNN',
   economic_times: 'Economic Times', business_standard: 'Business Standard',
+  // Telugu
   eenadu: 'Eenadu', sakshi: 'Sakshi', andhrajyothy: 'Andhra Jyothy',
   namaste_telangana: 'Namasthe Telangana', telangana_today: 'Telangana Today',
   vaartha: 'Vaartha', great_andhra: 'Great Andhra',
+  // Hindi
   dainik_jagran: 'Dainik Jagran', dainik_bhaskar: 'Dainik Bhaskar',
-  amar_ujala: 'Amar Ujala', hindustan_hindi: 'Hindustan Hindi',
+  amar_ujala: 'Amar Ujala', hindustan_hindi: 'Hindustan (Hindi)',
   navbharat_times: 'Navbharat Times', rajasthan_patrika: 'Rajasthan Patrika',
   jansatta: 'Jansatta',
+  // Tamil
   daily_thanthi: 'Dina Thanthi', dinamalar: 'Dinamalar',
   dinamani: 'Dinamani', maalai_malar: 'Maalai Malar',
+  // Kannada
   vijaya_karnataka: 'Vijaya Karnataka', prajavani: 'Prajavani',
   vijayavani: 'Vijayavani', udayavani: 'Udayavani',
+  // Malayalam
   malayala_manorama: 'Malayala Manorama', mathrubhumi: 'Mathrubhumi',
-  deshabhimani: 'Deshabhimani',
+  deshabhimani: 'Deshabhimani', kerala_kaumudi: 'Kerala Kaumudi',
+  // Marathi
   lokmat: 'Lokmat', maharashtra_times: 'Maharashtra Times',
   pudhari: 'Pudhari', sakal: 'Sakal',
+  // Bengali
   anandabazar: 'Anandabazar Patrika', bartaman: 'Bartaman Patrika',
   sangbad_pratidin: 'Sangbad Pratidin', telegraph_india: 'The Telegraph India',
+  // Gujarati
   gujarat_samachar: 'Gujarat Samachar', divya_bhaskar: 'Divya Bhaskar',
   sandesh: 'Sandesh',
 };
 
 // Native script area names for filtering Indian language RSS articles
 const AREA_NATIVE_NAMES = {
-  // Telugu
-  vizag:        ['విశాఖపట్నం', 'విశాఖ', 'వైజాగ్'],
-  vijayawada:   ['విజయవాడ'],
-  guntur:       ['గుంటూరు'],
-  tirupati:     ['తిరుపతి'],
-  hyderabad:    ['హైదరాబాద్', 'హైదరాబాద'],
-  warangal:     ['వరంగల్'],
-  karimnagar:   ['కరీంనగర్'],
-  rajahmundry:  ['రాజమహేంద్రవరం', 'రాజమండ్రి'],
-  // Hindi
-  delhi:        ['दिल्ली', 'नई दिल्ली'],
-  lucknow:      ['लखनऊ'],
-  kanpur:       ['कानपुर'],
-  varanasi:     ['वाराणसी', 'बनारस'],
-  jaipur:       ['जयपुर'],
-  bhopal:       ['भोपाल'],
-  indore:       ['इंदौर'],
-  patna:        ['पटना'],
-  mumbai:       ['मुंबई'],
-  // Tamil
-  chennai:      ['சென்னை'],
-  coimbatore:   ['கோயம்புத்தூர்'],
-  madurai:      ['மதுரை'],
-  // Kannada
-  bangalore:    ['ಬೆಂಗಳೂರು', 'ಬೆಂಗಳೂರ'],
-  mysore:       ['ಮೈಸೂರು'],
-  mangalore:    ['ಮಂಗಳೂರು'],
-  // Malayalam
-  kochi:        ['കൊച്ചി'],
+  // Telugu areas
+  vizag:              ['విశాఖపట్నం', 'విశాఖ', 'వైజాగ్'],
+  vijayawada:         ['విజయవాడ'],
+  guntur:             ['గుంటూరు'],
+  tirupati:           ['తిరుపతి'],
+  kurnool:            ['కర్నూలు'],
+  nellore:            ['నెల్లూరు'],
+  rajahmundry:        ['రాజమహేంద్రవరం', 'రాజమండ్రి'],
+  kakinada:           ['కాకినాడ'],
+  eluru:              ['ఏలూరు'],
+  ongole:             ['ఒంగోలు'],
+  kadapa:             ['కడప'],
+  anantapur:          ['అనంతపురం'],
+  srikakulam:         ['శ్రీకాకుళం'],
+  vizianagaram:       ['విజయనగరం'],
+  hyderabad:          ['హైదరాబాద్', 'హైదరాబాద'],
+  warangal:           ['వరంగల్'],
+  karimnagar:         ['కరీంనగర్'],
+  nizamabad:          ['నిజామాబాద్'],
+  khammam:            ['ఖమ్మం'],
+  nalgonda:           ['నల్గొండ'],
+  adilabad:           ['ఆదిలాబాద్'],
+  // Hindi areas
+  delhi:              ['दिल्ली', 'नई दिल्ली'],
+  noida:              ['नोएडा'],
+  gurgaon:            ['गुरुग्राम', 'गुड़गांव'],
+  lucknow:            ['लखनऊ'],
+  kanpur:             ['कानपुर'],
+  varanasi:           ['वाराणसी', 'बनारस'],
+  agra:               ['आगरा'],
+  meerut:             ['मेरठ'],
+  jaipur:             ['जयपुर'],
+  jodhpur:            ['जोधपुर'],
+  udaipur:            ['उदयपुर'],
+  bhopal:             ['भोपाल'],
+  indore:             ['इंदौर'],
+  patna:              ['पटना'],
+  mumbai:             ['मुंबई'],
+  pune:               ['पुणे'],
+  nagpur:             ['नागपुर'],
+  nashik:             ['नाशिक'],
+  // Tamil areas
+  chennai:            ['சென்னை'],
+  coimbatore:         ['கோயம்புத்தூர்', 'கோவை'],
+  madurai:            ['மதுரை'],
+  salem:              ['சேலம்'],
+  trichy:             ['திருச்சி', 'திருச்சிராப்பள்ளி'],
+  tirunelveli:        ['திருநெல்வேலி'],
+  vellore:            ['வேலூர்'],
+  erode:              ['ஈரோடு'],
+  // Kannada areas
+  bangalore:          ['ಬೆಂಗಳೂರು', 'ಬೆಂಗಳೂರ'],
+  mysore:             ['ಮೈಸೂರು'],
+  mangalore:          ['ಮಂಗಳೂರು'],
+  hubli:              ['ಹುಬ್ಬಳ್ಳಿ', 'ಧಾರವಾಡ'],
+  belgaum:            ['ಬೆಳಗಾವಿ'],
+  // Malayalam areas
+  kochi:              ['കൊച്ചി', 'എറണാകുളം'],
   thiruvananthapuram: ['തിരുവനന്തപുരം'],
-  kozhikode:    ['കോഴിക്കോട്'],
-  // Marathi
-  pune:         ['पुणे'],
-  nagpur:       ['नागपुर'],
-  nashik:       ['नाशिक'],
-  // Bengali
-  kolkata:      ['কলকাতা'],
+  kozhikode:          ['കോഴിക്കോട്'],
+  thrissur:           ['തൃശ്ശൂർ'],
+  kollam:             ['കൊല്ലം'],
+  // Marathi areas
+  mumbai:             ['मुंबई'],
+  pune:               ['पुणे'],
+  nagpur:             ['नागपुर'],
+  nashik:             ['नाशिक'],
+  aurangabad:         ['औरंगाबाद'],
+  solapur:            ['सोलापूर'],
+  // Bengali areas
+  kolkata:            ['কলকাতা'],
+  siliguri:           ['শিলিগুড়ি'],
+  // Gujarati areas
+  ahmedabad:          ['અમદાવાદ'],
+  surat:              ['સુરત'],
+  vadodara:           ['વડોદરા'],
+  rajkot:             ['રાજકોટ'],
 };
 
 // Google News RSS — always works, language+topic aware
@@ -193,33 +241,66 @@ const GOOGLE_LANG = {
   kn: 'kn', ml: 'ml', mr: 'mr', bn: 'bn', gu: 'gu',
 };
 
-// Newspaper to Google News search query map
+// Newspaper to Google News search query map — use exact publication names
 const NEWSPAPER_GOOGLE_QUERY = {
-  eenadu: 'Eenadu', sakshi: 'Sakshi Telugu', andhrajyothy: 'Andhra Jyothy',
-  namaste_telangana: 'Namasthe Telangana', telangana_today: 'Telangana Today',
-  vaartha: 'Vaartha Telugu', great_andhra: 'Great Andhra',
-  dainik_jagran: 'Dainik Jagran', dainik_bhaskar: 'Dainik Bhaskar',
-  amar_ujala: 'Amar Ujala', hindustan_hindi: 'Hindustan Hindi',
-  navbharat_times: 'Navbharat Times', rajasthan_patrika: 'Rajasthan Patrika',
-  jansatta: 'Jansatta',
-  daily_thanthi: 'Dina Thanthi', dinamalar: 'Dinamalar',
-  dinamani: 'Dinamani', maalai_malar: 'Maalai Malar',
-  vijaya_karnataka: 'Vijaya Karnataka', prajavani: 'Prajavani',
-  vijayavani: 'Vijayavani', udayavani: 'Udayavani',
-  malayala_manorama: 'Malayala Manorama', mathrubhumi: 'Mathrubhumi',
-  deshabhimani: 'Deshabhimani', kerala_kaumudi: 'Kerala Kaumudi',
-  lokmat: 'Lokmat', maharashtra_times: 'Maharashtra Times',
-  sakal: 'Sakal', pudhari: 'Pudhari',
-  anandabazar: 'Anandabazar Patrika', bartaman: 'Bartaman Patrika',
-  sangbad_pratidin: 'Sangbad Pratidin', telegraph_india: 'Telegraph India',
-  gujarat_samachar: 'Gujarat Samachar', divya_bhaskar: 'Divya Bhaskar',
-  sandesh: 'Sandesh',
-  times_of_india: 'Times of India', the_hindu: 'The Hindu',
-  indian_express: 'Indian Express', hindustan_times: 'Hindustan Times',
-  deccan_herald: 'Deccan Herald', economic_times: 'Economic Times',
-  business_standard: 'Business Standard', bbc: 'BBC News',
-  reuters: 'Reuters', guardian: 'The Guardian',
-  al_jazeera: 'Al Jazeera', cnn: 'CNN',
+  // Telugu
+  eenadu:             'Eenadu',
+  sakshi:             'Sakshi',
+  andhrajyothy:       'Andhra Jyothy',
+  namaste_telangana:  'Namasthe Telangana',
+  telangana_today:    'Telangana Today',
+  vaartha:            'Vaartha',
+  great_andhra:       'Great Andhra',
+  // Hindi
+  dainik_jagran:      'Dainik Jagran',
+  dainik_bhaskar:     'Dainik Bhaskar',
+  amar_ujala:         'Amar Ujala',
+  hindustan_hindi:    'Hindustan',
+  navbharat_times:    'Navbharat Times',
+  rajasthan_patrika:  'Rajasthan Patrika',
+  jansatta:           'Jansatta',
+  // Tamil
+  daily_thanthi:      'Dina Thanthi',
+  dinamalar:          'Dinamalar',
+  dinamani:           'Dinamani',
+  maalai_malar:       'Maalai Malar',
+  // Kannada
+  vijaya_karnataka:   'Vijaya Karnataka',
+  prajavani:          'Prajavani',
+  vijayavani:         'Vijayavani',
+  udayavani:          'Udayavani',
+  // Malayalam
+  malayala_manorama:  'Malayala Manorama',
+  mathrubhumi:        'Mathrubhumi',
+  deshabhimani:       'Deshabhimani',
+  kerala_kaumudi:     'Kerala Kaumudi',
+  // Marathi
+  lokmat:             'Lokmat',
+  maharashtra_times:  'Maharashtra Times',
+  sakal:              'Sakal',
+  pudhari:            'Pudhari',
+  // Bengali
+  anandabazar:        'Anandabazar Patrika',
+  bartaman:           'Bartaman Patrika',
+  sangbad_pratidin:   'Sangbad Pratidin',
+  telegraph_india:    'The Telegraph',
+  // Gujarati
+  gujarat_samachar:   'Gujarat Samachar',
+  divya_bhaskar:      'Divya Bhaskar',
+  sandesh:            'Sandesh',
+  // English
+  times_of_india:     'Times of India',
+  the_hindu:          'The Hindu',
+  indian_express:     'Indian Express',
+  hindustan_times:    'Hindustan Times',
+  deccan_herald:      'Deccan Herald',
+  economic_times:     'Economic Times',
+  business_standard:  'Business Standard',
+  bbc:                'BBC News',
+  reuters:            'Reuters',
+  guardian:           'The Guardian',
+  al_jazeera:         'Al Jazeera',
+  cnn:                'CNN',
 };
 
 async function fetchFromGoogleNews(newspaper, area, language) {
